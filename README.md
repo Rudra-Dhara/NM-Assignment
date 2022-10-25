@@ -1,0 +1,1 @@
+This is the github repository of Rudra Dhara. Here I will upload my answer to the assignment of the Numerical Methods Course.
