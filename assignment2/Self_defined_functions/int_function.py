@@ -1,10 +1,9 @@
-"""This is a self defined module for integration
-Here I defined many metheds of integration you can intutiavely 
-understand the method by looking the name of the method of integration
-eg. int_mid is for mid point method.
+#This is a self defined module for integration
+#Here I defined many metheds of integration you can intutiavely understand the method by looking the name of the method of integration
+#eg. int_mid is for mid point method.
 
-Almost all function take the argument in form of (f,a,b,n) stands for (function,starting limit, ending limit, number of steps)
-only gauss quadratur and romborg higher order method take different argument"""
+#Almost all function take the argument in form of (f,a,b,n) stands for (function,starting limit, ending limit, number of steps)
+#only gauss quadratur and romborg higher order method take different argument
 
 
 #midoint method
