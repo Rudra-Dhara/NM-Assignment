@@ -1,7 +1,7 @@
 #function for lagrange interpolation
 # x is our variable, a = list of x[i], n= list of f(x[i])
 
-def L(x,a,b):
+def Lag_fn(x,a,b):
     
     l=1
     sum=0
@@ -42,10 +42,3 @@ def Lag_diff(x,a,b):
 
 
     return sum
-a=[0,1,3]
-b=[0,1,9]
-
-print(L(1,a,b))
-for i in [-1,0,2,3.5,4]:
-
-    print(Lag_diff(i,a,b))
