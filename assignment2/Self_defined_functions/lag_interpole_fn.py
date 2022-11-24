@@ -44,6 +44,7 @@ def Lag_diff(x,a,b):
     return sum
 
 #This are some derivative function for getting out our coefficients
+#this function is n**3 complexity so don't use it for large data point
 def Lag_difn2(x,a,b):
     sum = 0
 
@@ -75,7 +76,7 @@ def Lag_difn2(x,a,b):
 #we use centered deference approcimation to find 1st
 # it is correct upto O(h**4) 
 def Lag_d2F(x,a,b):
-    h=0.1
+    h=0.01
     d1f= (-Lag_diff(x+2*h,a,b) + 8*Lag_diff(x+h,a,b) - 8*Lag_diff(x-h,a,b) + Lag_diff(x-2*h,a,b))/(12*h)
     return d1f
 
