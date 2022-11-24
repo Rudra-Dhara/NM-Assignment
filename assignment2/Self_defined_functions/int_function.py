@@ -30,17 +30,17 @@ def int_trap(f,a,b,n):
 
 
 #simpsons 1/3 method
-def int_simp(f,a,b,n):
+def int_simp(f,a,b,n,*args):
     if(n%2!=0):
         n+=1
-    sum=(f(a)+f(b))
+    sum=(f(a,*args)+f(b,*args))
     h= (b-a)/n
 
     for i in range(1,n,2):
-        sum+= 4*f(a+i*h) 
+        sum+= 4*f(a+i*h,*args) 
     
     for i in range(2,n,2):
-        sum+= 2*f(a+i*h)
+        sum+= 2*f(a+i*h,*args)
 
     intgn=sum*h/3
 
