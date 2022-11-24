@@ -50,12 +50,12 @@ def F(x,a,b):
     n_div=100
     return ifun.int_simp(lag.Lag_fn,0,x,n_div,a,b)
 
-#nr_root=rt.NR_rt(F,lag.Lag_fn,-1,0.000001,a,b)
-#root_list=[nr_root]
-#x=-1
-#count=0 
-#print("\n\n########\nPart d")
-#while (x<=2):
+nr_root=rt.NR_rt(F,lag.Lag_fn,-1,0.000001,a,b)
+root_list=[nr_root]
+x=-1
+count=0 
+print("\n\n########\nPart d")
+while (x<=2):
     print("running...")             #the code take long time to run so useing the print
     x+=nr_root+1
     if abs(nr_root - rt.NR_rt(F,lag.Lag_fn,x,0.000001,a,b))> 0.00001:
@@ -111,29 +111,51 @@ omega1 = rt.NR_rt(omega_od1,df_omega_od1,-1,0.0000001,a1,b1,c1)
 b2= k1 - c1*omega1
 a2 = k2 + (c1*omega1**2)/2 -k1*omega1
 
+#updating k2 as 2nd order deriviative can contain some explicit errors
+
+k2 = a2 + b2*omega1 + c1*omega1**2/6
 #2nd time approximation
 omega1 = rt.NR_rt(omega_od1,df_omega_od1,-1,0.0000001,a2,b2,c1)
 
-b2= k1 - c1*omega1
-a2 = k2 + (c1*omega1**2)/2 -k1*omega1
+
 print("\nThe updated a,b,c,omega are:(2nd approximation) \n",[a2,b2,c1,omega1])
 
+omega2 = rt.NR_rt(omega_od1,df_omega_od1,-1,0.0000001,a2,b2,c1)
+
+b3= k1 - c1*omega2
+a3 = k2 + (c1*omega2**2)/2 -k1*omega2
+
 #3rd time approximation
-for i in range(10):
-    omega2 = rt.NR_rt(omega_od1,df_omega_od1,-1,0.0000001,a2,b2,c1)
+for i in range(3):                          #as 3 parameter is updating more than 3 itteration is giving large errors
+    omega2 = rt.NR_rt(omega_od1,df_omega_od1,-1,0.0000001,a3,b3,c1)
 
-    b3= k1 - c1*omega1
-    a3 = k2 + (c1*omega1**2)/2 -k1*omega1
+    b3= k1 - c1*omega2
+    a3 = k2 + (c1*omega2**2)/2 -k1*omega2
+    k2 = a3 + b3*omega2 + c1*omega2**2/6    
 
+#up to this point we consider the coefficient are well calculated except omega
+#so we want to improve the value of omega
 
 def f_plt(x,a,b,c,omega):
 
     return (a*x**2 + b*x + c)*np.exp(omega*x)
 
+print("after 3rd approximation we are getting the value of the coefficients are:\n",[a3,b3,c1,omega2])
+# 4th order approximation that only the value of a3 and omega2 have some errosr
+
+global lag_4
+lag_4 = lag.Lag_fn(-1,a,b)
+def omega_od1(x,a1,b1,c1):
+    return (a1 + b1 + c1)*m.exp(omega) - lag_4
+
+def df_omega_od1(x,a1,b1,c1):
+    return -(a1 - b1 + c1)*m.exp(-1*x)
+
+ 
+
 plt.scatter(a,b)
-plt.plot(a,f_plt(a,a1,b1,c1,omega),label="first order")
-plt.plot(a,f_plt(a,a2,b2,c1,omega1),label="2nd order")
-plt.plot(a,f_plt(a,a3,b3,c1,omega2),label="3rd oredr")
+plt.plot(a,f_plt(a,a3,b3,c1,omega2),label="3rd oreder")
+plt.plot(a,f_plt(a,1,b3,c1,0.2),label="3rd")
 plt.legend()
 
 plt.show()
