@@ -50,8 +50,9 @@ nr_root=rt.NR_rt(F,lag.Lag_fn,-1,0.000001,a,b)
 root_list=[nr_root]
 x=-1
 count=0 
+print("\n\n########\nPart d")
 while (x<=2):
-    print("running...")
+    print("running...")             #the code take long time to run so useing the print
     x+=nr_root+1
     if abs(nr_root - rt.NR_rt(F,lag.Lag_fn,x,0.000001,a,b))> 0.00001:
         nr_root=rt.NR_rt(F,lag.Lag_fn,x,0.000001,a,b)
@@ -60,6 +61,12 @@ while (x<=2):
         
     
 
-print("\n\n########\nPart d")
+
 print("The the values of x where the integration is 0, list of the roots:\n",root_list)
 
+#part e
+
+coeff=lag.Lag_coeff(a,b)
+
+print("\n\n########\nPart e")
+print("The coefficient of x**0, x**1, x**2, x**3 are given by the list:\n",coeff)
