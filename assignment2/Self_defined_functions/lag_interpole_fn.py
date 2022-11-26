@@ -2,6 +2,7 @@
 # x is our variable, a = list of x[i], n= list of f(x[i])
 import numpy as np
 
+#lagrange interpolation funciton
 def Lag_fn(x,a,b):
     
     l=1
@@ -20,6 +21,8 @@ def Lag_fn(x,a,b):
 
     return sum
 
+
+#derivative of interpolation funcion
 def Lag_diff(x,a,b):
     sum=0
     for j in range(len(a)):
@@ -42,6 +45,7 @@ def Lag_diff(x,a,b):
 
 
     return sum
+
 
 #This are some derivative function for getting out our coefficients
 #this function is n**3 complexity so don't use it for large data point
@@ -73,18 +77,25 @@ def Lag_difn2(x,a,b):
     
     return sum
 
+
 #we use centered deference approcimation to find 1st
 # it is correct upto O(h**4) 
 def Lag_d2F(x,a,b):
-    h=0.01
-    d1f= (-Lag_diff(x+2*h,a,b) + 8*Lag_diff(x+h,a,b) - 8*Lag_diff(x-h,a,b) + Lag_diff(x-2*h,a,b))/(12*h)
+    h=0.1
+    #d1f= (-Lag_diff(x+2*h,a,b) + 8*Lag_diff(x+h,a,b) - 8*Lag_diff(x-h,a,b) + Lag_diff(x-2*h,a,b))/(12*h)
+    d1f = (Lag_diff(x - 4*h,a,b)/280 - 4*Lag_diff(x - 3*h,a,b)/105 + Lag_diff(x - 2*h,a,b)/5 - 4*Lag_diff(x - h,a,b)/5
+            + 4*Lag_diff(x + h,a,b)/5 - Lag_diff(x + 2*h,a,b)/5 + 4*Lag_diff(x + 3*h,a,b)/105 - Lag_diff(x + 4*h,a,b)/280)/h
+    
     return d1f
 
 # centered deference approximation of 2nd order
 # give upto O(h**4) correct result
 def Lag_d3F(x,a,b):
-    h=0.01
-    d2f= (-Lag_diff(x+2*h,a,b) + 16*Lag_diff(x+h,a,b) -30*Lag_diff(x,a,b) + 16*Lag_diff(x-h,a,b) - Lag_diff(x-2*h,a,b))/(12*h**2)    
+    h=0.5
+    #d2f= (-Lag_diff(x+2*h,a,b) + 16*Lag_diff(x+h,a,b) -30*Lag_diff(x,a,b) + 16*Lag_diff(x-h,a,b) - Lag_diff(x-2*h,a,b))/(12*h**2)   
+    d2f = (-Lag_diff(x - 4*h,a,b)/560 + 8*Lag_diff(x - 3*h,a,b)/315 - Lag_diff(x - 2*h,a,b)/5 + 8*Lag_diff(x - h,a,b)/5 
+    - 205*Lag_diff(x,a,b)/72 + 8*Lag_diff(x + h,a,b)/5 - Lag_diff(x + 2*h,a,b)/5 + 8*Lag_diff(x + 3*h,a,b)/315 -Lag_diff(x + 4*h,a,b)/560 )/h**2 
+    
     return d2f
 
 def Lag_coeff(a,b):
